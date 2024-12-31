@@ -37,7 +37,7 @@ const Navbar = () => {
                   className={LinkClass}
                   >Jobs</NavLink>
                 <NavLink
-                  to="/add-job.html"
+                  to="/add-job"
                   className={LinkClass}
                   >Add Job</NavLink>
               </div>

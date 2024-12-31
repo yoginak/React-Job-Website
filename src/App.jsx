@@ -5,34 +5,54 @@ import MainLayout from './layouts/MainLayout';
 import JobsPage from './pages/JobsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import JobPage, {jobLoader} from './components/JobPage';
+import AddJobPage from './pages/AddJobPage';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <MainLayout />, // Main layout wrapper
-    children: [
-      {
-        path: "/", // Nested route
-        element: <HomePage />, // Content for this route
-      },
-      {
-        path: "/jobs", 
-        element: <JobsPage />, 
-      },
-      {
-        path: "/jobs/:id", 
-        element: <JobPage />, 
-        loader : jobLoader,
-      },
-      {
-        path: "*", 
-        element: <NotFoundPage />, 
-      },
-    ],
-  },
-]);
+
 
 const App = () => {
+
+   // Add New Job
+   const addJob = async (newJob) => {
+    const res = await fetch('/api/jobs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newJob),
+    });
+    return;
+  };
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MainLayout />, // Main layout wrapper
+      children: [
+        {
+          path: "/", // Nested route
+          element: <HomePage />, // Content for this route
+        },
+        {
+          path: "/jobs", 
+          element: <JobsPage />, 
+        },
+        {
+          path: "/jobs/:id", 
+          element: <JobPage />, 
+          loader : jobLoader,
+        },
+        {
+          path: "/add-job", 
+          element: <AddJobPage addJobSubmit={addJob}/>, 
+        },
+        {
+          path: "*", 
+          element: <NotFoundPage />, 
+        },
+      ],
+    },
+  ]);
+
   return (
     <RouterProvider router={router} />
   );
